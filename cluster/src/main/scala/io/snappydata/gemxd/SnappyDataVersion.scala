@@ -147,7 +147,7 @@ object SnappyDataVersion {
     versionDetails.put("sourceRevision", GemFireVersion.getSourceRevision)
 
     GemFireVersion.getInstance(classOf[GemFireXDVersion], SharedUtils.GFXD_VERSION_PROPERTIES)
-    val productEditionType = if (GemFireVersion.isEnterpriseEdition) "Enterprise" else "Community"
+    val productEditionType = if(GemFireVersion.isEnterpriseEdition)  "Enterprise" else if(GemFireVersion.isCustomEdition) "Custom" else "Community"
 
     versionDetails.put("editionType", productEditionType)
 
