@@ -20,7 +20,11 @@ import org.gradle.internal.logging.*
 
 buildscript {
   repositories {
+   // maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+   // maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
     maven { url 'https://plugins.gradle.org/m2' }
+   // maven { url 'http://maven.ulnit.com/repository/maven-public' }
+   // maven { url 'https://mirrors.huaweicloud.com/repository/maven' }
     mavenCentral()
   }
   dependencies {
