@@ -5,7 +5,7 @@
 [submodule "snappy-store"]
 	path = store
 	url = https://github.com/xyxiaoyou/snappy-store.git
-	branch = XY191023
+	branch = XY191029
 [submodule "spark"]
         path = spark
         url = https://github.com/xyxiaoyou/spark.git
