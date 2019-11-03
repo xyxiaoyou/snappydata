@@ -43,7 +43,7 @@ import org.apache.spark.sql.execution.command.DDLUtils
 import org.apache.spark.sql.execution.datasources.{CreateTable, LogicalRelation, PreprocessTableInsertion}
 import org.apache.spark.sql.execution.{SecurityUtils, datasources}
 import org.apache.spark.sql.hive.SnappySessionState
-import org.apache.spark.sql.internal.SQLConf.SQLConfigBuilder
+import org.apache.spark.sql.internal.SQLConf.buildConf
 import org.apache.spark.sql.internal.StaticSQLConf.CATALOG_IMPLEMENTATION
 import org.apache.spark.sql.sources._
 import org.apache.spark.sql.types.{DecimalType, StringType}
@@ -406,16 +406,16 @@ object SQLConfigEntry {
   def apply[T: ClassTag](key: String, doc: String, defaultValue: Option[T],
       isPublic: Boolean = true): SQLConfigEntry = {
     classTag[T] match {
-      case ClassTag.Int => handleDefault[Int](SQLConfigBuilder(key)
+      case ClassTag.Int => handleDefault[Int](buildConf(key)
           .doc(doc).intConf, defaultValue.asInstanceOf[Option[Int]])
-      case ClassTag.Long => handleDefault[Long](SQLConfigBuilder(key)
+      case ClassTag.Long => handleDefault[Long](buildConf(key)
           .doc(doc).longConf, defaultValue.asInstanceOf[Option[Long]])
-      case ClassTag.Double => handleDefault[Double](SQLConfigBuilder(key)
+      case ClassTag.Double => handleDefault[Double](buildConf(key)
           .doc(doc).doubleConf, defaultValue.asInstanceOf[Option[Double]])
-      case ClassTag.Boolean => handleDefault[Boolean](SQLConfigBuilder(key)
+      case ClassTag.Boolean => handleDefault[Boolean](buildConf(key)
           .doc(doc).booleanConf, defaultValue.asInstanceOf[Option[Boolean]])
       case c if c.runtimeClass == classOf[String] =>
-        handleDefault[String](SQLConfigBuilder(key).doc(doc).stringConf,
+        handleDefault[String](buildConf(key).doc(doc).stringConf,
           defaultValue.asInstanceOf[Option[String]])
       case c => throw new IllegalArgumentException(
         s"Unknown type of configuration key: $c")
