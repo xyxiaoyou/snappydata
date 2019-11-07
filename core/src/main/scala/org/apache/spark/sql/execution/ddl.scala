@@ -469,17 +469,17 @@ class DescribeSnappyTableCommand(table: TableIdentifier,
 
 class SetSnappyCommand(kv: Option[(String, Option[String])]) extends SetCommand(kv) {
   val logger = LoggerFactory.getLogger(this.getClass)
-  logger.error("---ULNIT---SetSnappyCommand")
+  // logger.error("---ULNIT---SetSnappyCommand")
   override def run(sparkSession: SparkSession): Seq[Row] = kv match {
     // SnappySession allows attaching external hive catalog at runtime
     case Some((k, Some(v))) if k.equalsIgnoreCase(StaticSQLConf.CATALOG_IMPLEMENTATION.key) =>
-      logger.error("---ULNIT---SetSnappyCommand->Some((k, Some(v))):{}-{}",
-        Array(k, v): _*)
+      // logger.error("---ULNIT---SetSnappyCommand->Some((k, Some(v))):{}-{}",
+      //  Array(k, v): _*)
       sparkSession.sessionState.conf.setConfString(k, v)
       Row(k, v) :: Nil
     case _ =>
-      logger.error("---ULNIT---SetSnappyCommand->_:{}-{}",
-        Array(kv.get._1, kv.get._2): _*)
+      // logger.error("---ULNIT---SetSnappyCommand->_:{}-{}",
+      //  Array(kv.get._1, kv.get._2): _*)
       super.run(sparkSession)
   }
 }
