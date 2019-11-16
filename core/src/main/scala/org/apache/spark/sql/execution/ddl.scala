@@ -24,6 +24,7 @@ import java.util.Map.Entry
 import java.util.function.Consumer
 
 import scala.collection.mutable.ArrayBuffer
+
 import com.gemstone.gemfire.SystemFailure
 import com.pivotal.gemfirexd.internal.engine.Misc
 import com.pivotal.gemfirexd.internal.engine.store.GemFireStore
@@ -32,6 +33,7 @@ import com.pivotal.gemfirexd.internal.impl.jdbc.Util
 import com.pivotal.gemfirexd.internal.shared.common.reference.SQLState
 import io.snappydata.Property
 import io.snappydata.util.ServiceUtils
+
 import org.apache.spark.SparkContext
 import org.apache.spark.deploy.SparkSubmitUtils
 import org.apache.spark.sql._
@@ -52,7 +54,6 @@ import org.apache.spark.sql.types._
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.streaming.{Duration, SnappyStreamingContext}
 import org.apache.spark.unsafe.types.CalendarInterval
-import org.slf4j.LoggerFactory
 
 case class CreateTableUsingCommand(
     tableIdent: TableIdentifier,
@@ -468,19 +469,13 @@ class DescribeSnappyTableCommand(table: TableIdentifier,
 }
 
 class SetSnappyCommand(kv: Option[(String, Option[String])]) extends SetCommand(kv) {
-  val logger = LoggerFactory.getLogger(this.getClass)
-  // logger.error("---ULNIT---SetSnappyCommand")
+
   override def run(sparkSession: SparkSession): Seq[Row] = kv match {
     // SnappySession allows attaching external hive catalog at runtime
     case Some((k, Some(v))) if k.equalsIgnoreCase(StaticSQLConf.CATALOG_IMPLEMENTATION.key) =>
-      // logger.error("---ULNIT---SetSnappyCommand->Some((k, Some(v))):{}-{}",
-      //  Array(k, v): _*)
       sparkSession.sessionState.conf.setConfString(k, v)
       Row(k, v) :: Nil
-    case _ =>
-      // logger.error("---ULNIT---SetSnappyCommand->_:{}-{}",
-      //  Array(kv.get._1, kv.get._2): _*)
-      super.run(sparkSession)
+    case _ => super.run(sparkSession)
   }
 }
 
