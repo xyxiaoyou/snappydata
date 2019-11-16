@@ -2198,6 +2198,12 @@ object SnappySession extends Logging {
     GemFireVersion.isEnterpriseEdition
   }
 
+  lazy val isCustomEdition: Boolean = {
+    GemFireCacheImpl.setGFXDSystem(true)
+    GemFireVersion.getInstance(classOf[GemFireXDVersion], SharedUtils.GFXD_VERSION_PROPERTIES)
+    GemFireVersion.isCustomEdition
+  }
+
   private lazy val aqpSessionStateClass: Option[Class[_]] = {
     if (isEnterpriseEdition) {
       try {

@@ -166,7 +166,7 @@ class LeadImpl extends ServerImpl with Lead
 
     val productName = {
       if (SnappySession.isEnterpriseEdition) {
-        "TIBCO ComputeDB"
+        if (SnappySession.isCustomEdition) "CustomDB" else "TIBCO ComputeDB"
       } else {
         "SnappyData"
       }
