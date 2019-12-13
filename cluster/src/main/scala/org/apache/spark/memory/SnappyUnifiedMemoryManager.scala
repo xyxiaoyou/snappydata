@@ -762,7 +762,6 @@ class SnappyUnifiedMemoryManager private[memory](
       numBytes: Long,
       memoryMode: MemoryMode): Unit = synchronized {
     logDebug(s"releasing $managerId memory for $objectName = $numBytes")
-    logWarning(s"$memoryMode======releasing $managerId memory for $objectName = $numBytes")
     val key = new MemoryOwner(objectName, memoryMode)
     super.releaseStorageMemory(numBytes, memoryMode)
     val offHeap = memoryMode eq MemoryMode.OFF_HEAP
